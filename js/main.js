@@ -34,7 +34,10 @@ function ExpectLikeComic(){
        })
        .success(function(data){
                 tmp.push(data.title,data.genres);
-                $("#expect_like_comic").text(data.title);
+                var recommend = $("#recommend");
+                var $node = $("<div>").text(data.title).addClass("center");
+                recommend.append($node);
+
         })
        .error(function(msg){
               console.log(msg);
@@ -43,28 +46,38 @@ function ExpectLikeComic(){
         return tmp;
 }
 
+function CreateNodeGenre(genre){
+  var $node = $("<div>").text(genre).addClass("genre");
+  return $node;
+}
 
-function plotTitle(titles){
-  var pos = $("#expect_like_comic").offset()
-  var rad = 30//360/titles.length//プロットする角度
-  var centerX = pos.left;
-  var centerY = pos.top;
 
-  //console.log($(window).width()/2)//原点X軸
-  //console.log($(window).height()/2)//原点Y軸
-   r = 200;
-
-  for (var i=0 ; i < titles.length ; i++){
-    var rad = 2 * Math.PI * (i/titles.length);
-    //var x = r * Math.cos(rad);
-    //var y = r * Math.sin(rad); 
-    $("<div class = titles>"+titles[i]+"</div>").appendTo("body");    
-    $(".titles").css("top", pos.top + rad *Math.cos(rad));//cos
-    $(".titles").css("left", pos.left + rad * Math.sin(rad));//sin
-    rad = rad + rad;
+function NodesGenre(genres){
+  var nodes = []
+  for (var i = 0; i < genres.length; i++){
+    var node = CreateNodeGenre(genres[i]);
+    nodes.push(node);
   }
+return nodes;
+}
 
-  //$("<div class = titles>"+title+"</div>").appendTo("body");
+function NodeTitle(title){
+  var node = $("<div>").text(title.title).addClass("title");
+  return node;
+}
+
+function spread(titles,r){
+  for (var i=0;i<titles.length; i++){
+    var node = titles[i];
+    var centerX = node.offset().left;
+    var centerY = node.offset().top;
+    var rad = 2*Math.PI * (i/titles.length);
+    var x = r * Math.cos(rad) + centerX;
+    var y = r * Math.sin(rad) + centerY;
+    titles[i].animate({
+      left:x,
+      top:y },"slow");
+    }
 }
 
 
@@ -72,65 +85,57 @@ $(function(){
     var DbComic = LoadJson();//収集したコミックのタイトルとジャンル　title: genre:
     $(document).on("click","#button",function(){
         var RecomendComic = ExpectLikeComic();//レコメンドされたコミック
-        genres = RecomendComic[1]
-        plot_location = []
-
-        for (var i =0; i < genres.length ; i++){
-          $("<div class = genres>"+genres[i]+"</div>").appendTo("body");
+        recomend_genres = RecomendComic[1];
+        var $genre = $("#genres");
+        nodes_genre = NodesGenre(recomend_genres)
+        for (var i = 0; i< nodes_genre.length; i++){
+          //console.log(nodes_genre[i])
+           var each_genre = nodes_genre[i];
+           //$genre.append(each_genre);//ジャンル情報をdivに格納
         }
+
+        titles = []
         for (var i=0; i< DbComic.length; i++){
-          for (var j = 0; j<genres.length; j++){
-            if ($.inArray(genres[j],DbComic[i].genres) != -1){
-              if (RecomendComic[0] != DbComic[i].title){
-                plot_location.push(DbComic[i].title)
-                //plotTitle(DbComic[i].title)
-                //$("<div class = titles>"+DbComic[i].title+"</div>").appendTo("body");
-                break
-              };
-            };
+          for (var j = 0; j < recomend_genres.length; j++){
+            if ($.inArray(recomend_genres[j],DbComic[i].genres) != -1){
+              node_title = NodeTitle(DbComic[i]);
+              titles.push(node_title);
+              break
+            }
           }
         }
-         $("#lile_comic_tiltes").remove()
-        plotTitle(plot_location)
-        
+
+        var $title = $("#titles");
+
+        var $expect_like_comic = $(".center");
+        var pos = $expect_like_comic.position();
+        var centerX = pos.left;
+        var centerY = pos.top;
+
+        for(var i = 0; i < titles.length; i++){
+            var each_title = titles[i];
+            $title.append(each_title);
+            each_title.css({
+              left:centerX,
+              top:centerY
+            })
+         }
+
+    r = 256;
+    spread(titles,r) 
+    $("#like_comic_titles").remove();
   })
-
-
-    $(document).on("click",".titles",function(){
-        $("#expect_like_comic").text($(this).text());
-        genres = []
-        for(var i = 0; i < DbComic.length; i++){
-            if ($(this).text() == DbComic[i].title){
-          　    $(".genres").remove();
-                $(".titles").remove();
-                for (var j =0; j < DbComic[i].genres.length ; j++){
-                    $("<div class = genres>"+DbComic[i].genres[j]+"</div>").appendTo("body");
-                    genres.push(DbComic[i].genres[j])
-                }   
-            }
-        }
-
-
-        for (var i = 0; i< DbComic.length; i++){
-            for (var j = 0 ; j < genres.length; j ++){
-                if ($.inArray(genres[i],DbComic[i].genres) != -1){
-                    if ($(this).text() != DbComic[i].title){
-                        $("<div class = titles>"+DbComic[i].title+"</div>").appendTo("body");
-                        break
-                    }
-                }
-            }
-        }
-    })
 })
 
 
-$(document).on("mouseover",".titles",function() {
-    console.log(this);
+
+$(document).on("click",".title",function() {
+    //console.log($(this).text();
+    console.log($(this));
 });
 
-$(document).on("mouseover",".genres",function() {
-    console.log(this);
+$(document).on("click",".genre",function() {
+    console.log($(this).text());
 });
 
 
@@ -148,45 +153,33 @@ $(document).on("mouseover",".genres",function() {
 
 
 
+//     $(document).on("click",".titles",function(){
+//         $("#expect_like_comic").text($(this).text());
+//         genres = []
+//         for(var i = 0; i < DbComic.length; i++){
+//             if ($(this).text() == DbComic[i].title){
+//           　    $(".genres").remove();
+//                 $(".titles").remove();
+//                 for (var j =0; j < DbComic[i].genres.length ; j++){
+//                     $("<div class = genres>"+DbComic[i].genres[j]+"</div>").appendTo("body");
+//                     genres.push(DbComic[i].genres[j])
+//                 }   
+//             }
+//         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//         for (var i = 0; i< DbComic.length; i++){
+//             for (var j = 0 ; j < genres.length; j ++){
+//                 if ($.inArray(genres[i],DbComic[i].genres) != -1){
+//                     if ($(this).text() != DbComic[i].title){
+//                         $("<div class = titles>"+DbComic[i].title+"</div>").appendTo("body");
+//                         break
+//                     }
+//                 }
+//             }
+//         }
+//     })
+// })
 
 
 //        $.ajax({
@@ -218,9 +211,6 @@ $(document).on("mouseover",".genres",function() {
 
 
 
-
-
-
 /*
  $(function() {
  $(document).on("click","#button",function(){
@@ -248,6 +238,9 @@ $(document).on("mouseover",".genres",function() {
  })
  });
  */
+
+
+
 
 
 

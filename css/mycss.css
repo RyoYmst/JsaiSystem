@@ -1,23 +1,21 @@
-#expect_like_comic{
+.center{
 					position:absolute;
 					top:50%;
 					left:50%;
+					width:64px;
+					height:64px;
 					background-color: #7f7fff;
 					border-radius: 50%;
 					}
 
 
-.titles{
+.title{
 	position:absolute;
-	/*top:50%;*/
-	background-color":"red";
-}
-
-/*x
-.genres{
-	position:absolute;
-	background-color: #FF657A;
+	background-color: #ff0000;
+	width:64px;
+	height:64px;
+	text-align: center;
 	border-radius: 50%;
 
 
-}*/
+}

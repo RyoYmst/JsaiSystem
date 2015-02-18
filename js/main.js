@@ -48,13 +48,16 @@ $(function(){//main関数
         titles = []
         for (var i=0; i< DbComic.length; i++){
           for (var j = 0; j < recomend_genres.length; j++){
-            if ($.inArray(recomend_genres[j],DbComic[i].genres) != -1){
-              node_title = NodeTitle(DbComic[i]);
-              titles.push(node_title);
-              break
+            if ($.inArray(recomend_genres[j],DbComic[i].genres) !== -1){
+              if (RecomendComic[0] !== DbComic[i].title){
+                node_title = NodeTitle(DbComic[i]);
+                titles.push(node_title);
+                break
+              }
             }
           }
         }
+
 
         var $title = $("#titles");
         var $expect_like_comic = $(".center");

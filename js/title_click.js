@@ -12,8 +12,6 @@ function NodesTitle(titles){
   return nodes;
 }
 
-
-
 $(document).on("click",".title",function() {
     var DbComic = LoadJson();
     var this_pos = $(this).position();
@@ -50,9 +48,11 @@ $(document).on("click",".title",function() {
     for (var i=0; i< DbComic.length; i++){
       for(var j = 0; j < select_comic[0].genres.length; j++){
         if ($.inArray(select_comic[0].genres[j],DbComic[i].genres) !== -1){
-          titles.push(DbComic[i].title);
-          break
-        }
+          if(select_comic[0].title !== DbComic[i].title){
+            titles.push(DbComic[i].title);
+            break
+          }
+      }
       }
     }
 

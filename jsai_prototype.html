@@ -14,18 +14,16 @@
         </head>
 
     <body>
-        <form name="js" id="lile_comic_tiltes">
+        <form name="js" id="like_comic_titles">
             好きな漫画のタイトルを入力して下さい<br>
-            <textarea name="titles" id="titles" cols="40" rows="20">SLAMDUNK</textarea>
+            <textarea name="titles" cols="40" rows="20">SLAMDUNK</textarea>
             <input type ="button" value ="入力完了"  id ="button"/>
             <input type="reset" name ="reset"/>
         </form>
         
-   
-        <div id ="expect_like_comic"></div>
-        <div class = "titles"></div>
-        <div class ="genres"></div>
-
+        <div id ="recommend"></div>
+        <div id ="genres"></div>
+        <div id ="titles"></div>
         
         
         <!--
@@ -41,17 +39,9 @@
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/loadjson.js"></script>
+    <script type="text/javascript" src="js/recommend.js"></script>
     </body>
     
 </html>

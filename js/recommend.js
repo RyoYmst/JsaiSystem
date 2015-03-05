@@ -17,8 +17,11 @@ function ExpectLikeComic(){
                 var recommend = $("#recommend");
                 var $node = $("<div>").text(data.title).addClass("center");
                 recommend.append($node);
-
+                $(".center").css({
+                   "background-image":"url(../~artuhr0912/img/"+ data.title +".jpeg)"
+                })
         })
+
        .error(function(msg){
               console.log(msg);
               console.log("error");

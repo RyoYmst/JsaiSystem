@@ -14,6 +14,11 @@ $(function(){
 						split_genre.push("\n");
 					}
 
+					$(this).animate({
+						width:"128px",
+						height:"182px"
+					},256);
+
 					$(this).showBalloon({
 						contents:split_genre,
 						tipSize:32,
@@ -21,19 +26,41 @@ $(function(){
 							fontSize:"28px"
 						}
 					})
+				
+				})
+	
+				.on("mouseout",".title",function(){
+					$(this).hideBalloon();
+					$(this).animate({
+						width:"64px",
+						height:"91px"
+					},256);
 				})
 
-				.on("mouseout",".title,.center",function(){
+					.on("mouseout",".center",function(){
 					$(this).hideBalloon();
+					$(this).animate({
+						width:"96px",
+						height:"136.5px"
+					},256);
 				})
 				
-				.on("click",".title,.center",function(){
+				.on("click",".title",function(){
 					$(this).hideBalloon();
+					$(this).animate({
+						width:"64px",
+						height:"91px"
+					},256);
+				})
+
+				.on("click",".center",function(){
+					$(this).hideBalloon();
+					$(this).animate({
+						width:"96px",
+						height:"136.5px"
+					},256);
+
 
 				})
 })
 
-
-$(document).on("mouseover",".center",function() {
-	console.log($(this).text());
-})

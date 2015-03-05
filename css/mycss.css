@@ -1,21 +1,27 @@
 .center{
+					font-size:0px;
 					position:absolute;
+					font-weight: 900;
 					top:50%;
 					left:50%;
-					width:72px;
-					height:72px;
-					background-color: #7f7fff;
-					border-radius: 50%;
-					}
+				    -moz-background-size:cover;
+					background-size:cover;
+					width:96px;
+					height:136.5px;
+
+}
 
 
 .title{
+	font-size:0px;
 	position:absolute;
-	background-color: #ff82ab;
-	width:90px;
-	height:90px;
-	text-align: center;
-	border-radius: 50%;
+	text-align: top;
+    -moz-background-size:cover;
+	background-size:cover;
+	width:64px;
+	height:91px;
+
+
 
 
 }

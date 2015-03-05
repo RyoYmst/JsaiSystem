@@ -31,8 +31,9 @@ $(document).on("click",".title",function() {
       $(this).remove();
     });
     $("#recommend").remove();
-    $(this).addClass("center");
     $(this).removeClass("title");
+    $(this).addClass("center");
+  
     $(".title").not(this).hide(1000,function(){
       $(this).remove();
     });
@@ -46,13 +47,17 @@ $(document).on("click",".title",function() {
 
     titles = []
     for (var i=0; i< DbComic.length; i++){
+      var count = 0;
       for(var j = 0; j < select_comic[0].genres.length; j++){
         if ($.inArray(select_comic[0].genres[j],DbComic[i].genres) !== -1){
           if(select_comic[0].title !== DbComic[i].title){
-            titles.push(DbComic[i].title);
-            break
+            count = count + 1;
+            if (count > 2){
+              titles.push(DbComic[i].title);
+              break
+            }
           }
-      }
+        }
       }
     }
 
@@ -61,12 +66,14 @@ $(document).on("click",".title",function() {
     for(var i = 0; i < node_titles.length; i++){
         var each_title = node_titles[i];
             $title.append(each_title);
+            
             each_title.css({
               left:centerX,
-              top:centerY
+              top:centerY,
+              "background-image":"url(../~artuhr0912/img/"+ each_title.text() +".jpg)"　
             })
     }
-    r = 128;
+    r = 256;
     spread(node_titles,r)
 
 });

@@ -1,4 +1,5 @@
 function CreateNodeGenre(genre){
+  //var $node = $("<div>").text().addClass("genre");
   var $node = $("<div>").text(genre).addClass("genre");
   return $node;
 }
@@ -17,7 +18,6 @@ function NodeTitle(title){
   return node;
 }
 
-
 function spread(titles,r){
   for (var i=0;i<titles.length; i++){
     var node = titles[i];
@@ -32,7 +32,6 @@ function spread(titles,r){
     }
 }
 
-
 $(function(){//main関数
     var DbComic = LoadJson();//収集したコミックのタイトルとジャンル　title: genre:
     $(document).on("click","#button",function(){
@@ -46,18 +45,22 @@ $(function(){//main関数
         }
 
         titles = []
+
         for (var i=0; i< DbComic.length; i++){
+          var count = 0;
           for (var j = 0; j < recomend_genres.length; j++){
             if ($.inArray(recomend_genres[j],DbComic[i].genres) !== -1){
               if (RecomendComic[0] !== DbComic[i].title){
-                node_title = NodeTitle(DbComic[i]);
-                titles.push(node_title);
-                break
+                count = count + 1;
+                if (count > 2){
+                  node_title = NodeTitle(DbComic[i]);
+                  titles.push(node_title);
+                  break;
+                }
               }
             }
           }
         }
-
 
         var $title = $("#titles");
         var $expect_like_comic = $(".center");
@@ -69,15 +72,15 @@ $(function(){//main関数
             $title.append(each_title);
             each_title.css({
               left:centerX,
-              top:centerY
+              top:centerY,
+              "background-image":"url(../~artuhr0912/img/"+ each_title.text() +".jpg)",     
             })
          }
-    r = 128;
+
+    r = 256;
     spread(titles,r) 
     $("#like_comic_titles").remove();
   })
 })
-
-
 
 

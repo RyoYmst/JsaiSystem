@@ -1,4 +1,5 @@
 function CreateNodeGenre(genre){
+  //var $node = $("<div>").text().addClass("genre");
   var $node = $("<div>").text(genre).addClass("genre");
   return $node;
 }
@@ -17,7 +18,6 @@ function NodeTitle(title){
   return node;
 }
 
-
 function spread(titles,r){
   for (var i=0;i<titles.length; i++){
     var node = titles[i];
@@ -30,6 +30,23 @@ function spread(titles,r){
       left:x,
       top:y },"slow");
     }
+}
+
+function generate_random(count){
+  var generated = [];
+  //for (var i = 0; i < 5 ; i++){
+  for (var i = 0; i < count; i++){
+    var candidate = Math.floor(Math.random()*count);
+    if ($.inArray(candidate,generated) == -1){
+      generated.push(candidate);  
+    }else{
+      continue
+    }
+    if (generated.length >= 10){
+      break
+    }
+  }
+  return generated
 }
 
 
@@ -47,13 +64,25 @@ $(function(){//main関数
 
         titles = []
         for (var i=0; i< DbComic.length; i++){
+          var count = 0;
           for (var j = 0; j < recomend_genres.length; j++){
-            if ($.inArray(recomend_genres[j],DbComic[i].genres) != -1){
-              node_title = NodeTitle(DbComic[i]);
-              titles.push(node_title);
-              break
+            if ($.inArray(recomend_genres[j],DbComic[i].genres) !== -1){
+              if (RecomendComic[0] !== DbComic[i].title){
+                count = count + 1;
+                //if (count > 0){
+                  node_title = NodeTitle(DbComic[i]);
+                  titles.push(node_title);
+                  break;
+                //}
+              }
             }
           }
+        }
+        console.log(titles)
+        random_titles = []
+        random_count = generate_random(titles.length)
+        for (var i = 0; i< random_count.length; i++){
+           random_titles.push(titles[random_count[i]])
         }
 
         var $title = $("#titles");
@@ -61,20 +90,21 @@ $(function(){//main関数
         var pos = $expect_like_comic.position();
         var centerX = pos.left;
         var centerY = pos.top;
+        //random_titles
         for(var i = 0; i < titles.length; i++){
-            var each_title = titles[i];
+            var each_title = titles[i];//random_titles
             $title.append(each_title);
             each_title.css({
               left:centerX,
-              top:centerY
+              top:centerY,
+              "background-image":"url(../~artuhr0912/img/"+ each_title.text() +".jpg)",     
             })
          }
-    r = 128;
-    spread(titles,r) 
+
+    r = 256;
+    spread(titles,r) //random_titles
     $("#like_comic_titles").remove();
   })
 })
-
-
 
 

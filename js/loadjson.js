@@ -1,7 +1,7 @@
 function LoadJson(){
   json_data = [];
   $.ajax({
-    url:"../~artuhr0912/data/data.json",
+    url:"../~artuhr0912/data/tfidf_data.json",
     dateType: "json",
     async:false,
     data:{"data" : "data"}

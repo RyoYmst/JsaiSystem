@@ -19,7 +19,7 @@ $(document).on("mouseover",".title,.center",function() {
 		$(this).animate({
 			width:"128px",
 			height:"182px"
-		},256);
+		},200);
 
 		$(this).showBalloon({
 			contents:split_genre,
@@ -35,7 +35,7 @@ $(document).on("mouseout",".title",function(){
 	$(this).animate({
 		width:"64px",
 		height:"91px"
-	},256);
+	},200);
 })
 
 $(document).on("mouseout",".center",function(){
@@ -43,7 +43,7 @@ $(document).on("mouseout",".center",function(){
 	$(this).animate({
 		width:"96px",
 		height:"136.5px"
-	},256);
+	},200);
 })
 				
 $(document).on("click",".title",function(){
@@ -51,7 +51,7 @@ $(document).on("click",".title",function(){
 	$(this).animate({
 		width:"64px",
 		height:"91px"
-	},256);
+	},200);
 })
 
 

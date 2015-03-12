@@ -13,7 +13,6 @@ function NodesTitle(titles){
 }
 
 $(document).on("click",".title",function() {
-    var DbComic = LoadJson();
     var this_pos = $(this).position();
     var thisX = this_pos.left;
     var thisY = this_pos.top;
@@ -80,7 +79,7 @@ $(document).on("click",".title",function() {
               "background-image":"url(../~artuhr0912/img/"+ each_title.text() +".jpg)"　
             })
     }
-    r = 256;
+    r = 200;
     spread(node_titles,r)
 
 });

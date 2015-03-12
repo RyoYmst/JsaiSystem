@@ -1,5 +1,4 @@
 function CreateNodeGenre(genre){
-  //var $node = $("<div>").text().addClass("genre");
   var $node = $("<div>").text(genre).addClass("genre");
   return $node;
 }
@@ -49,9 +48,8 @@ function generate_random(count){
   return generated
 }
 
-
 $(function(){//main関数
-    var DbComic = LoadJson();//収集したコミックのタイトルとジャンル　title: genre:
+    DbComic = LoadJson();//収集したコミックのタイトルとジャンル　title: genre:
     $(document).on("click","#button",function(){
         var RecomendComic = ExpectLikeComic();//レコメンドされたコミック
         recomend_genres = RecomendComic[1];
@@ -78,7 +76,7 @@ $(function(){//main関数
             }
           }
         }
-        console.log(titles)
+        //console.log(titles)
         random_titles = []
         random_count = generate_random(titles.length)
         for (var i = 0; i< random_count.length; i++){
@@ -101,7 +99,7 @@ $(function(){//main関数
             })
          }
 
-    r = 256;
+    r = 200;
     spread(titles,r) //random_titles
     $("#like_comic_titles").remove();
   })
